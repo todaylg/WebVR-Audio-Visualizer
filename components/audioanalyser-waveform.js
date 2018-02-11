@@ -60,8 +60,8 @@ AFRAME.registerComponent('audioanalyser-waveform', {
         depthTest : true,
         transparent : true
       });
-      //线=>圆？
       //vertices representing the line segment(s)  this.geometry
+      //根据顶点信息画线，在这里就是画圆
       lineMesh = new THREE.Line(this.geometry, material);
 
       //所以可以理解为一个基本的圆形中心，线绕圆的顶点（所以线也是圆的），并且递归增大形成波形
@@ -92,12 +92,14 @@ AFRAME.registerComponent('audioanalyser-waveform', {
     if(!analyserComponent.waveEffectFlag || !analyserComponent.analyser) { return; }
 
     VOL_SENS = 2;
+    //区间由128-256 => 0-256
     levels.push(analyserComponent.volume / 256 * VOL_SENS);  // 256 is max level.
     levels.shift(1);
 
     // Add a new color onto the list.
+    // this.noisePos += 0.01;
     this.noisePos += 0.005;
-    colors.push(Math.abs(this.perlin.noise(this.noisePos, 0, 0)));
+    colors.push(Math.abs(this.perlin.noise(this.noisePos, 0, 0)));//generate color？
     colors.shift(1);
 
     // Write current waveform into all rings.
@@ -110,13 +112,18 @@ AFRAME.registerComponent('audioanalyser-waveform', {
     this.geometry.vertices[this.geometry.vertices.length - 1].z = this.geometry.vertices[0].z;
     this.geometry.verticesNeedUpdate = true;
 
-    rings.forEach(function transformRing (ring, index) {
+    rings.forEach(function transformRing (ring, index) {//一帧里遍历转换所有圆环颜色
       var normLevel;
       normLevel = levels[data.ringCount - index - 1] + 0.01;  // Avoid scaling by 0.
-      ring.material.color.setHSL(colors[index], 1, normLevel);
+      //颜色也受levels影响
+      //HSL
+      //H:取值范围是0°到360°的圆心角，每个角度可以代表一种颜色:360°/0°红、60°黄、120°绿、180°青、240°蓝、300°洋红
+      //S:S(saturation)分量，指的是色彩的饱和度，它用0%至100%的值描述了相同色相、明度下色彩纯度的变化。数值越大，颜色中的灰色越少，颜色越鲜艳，呈现一种从理性(灰度)到感性(纯色)的变化。
+      //L:L(lightness)分量，指的是色彩的明度，作用是控制色彩的明暗变化。它同样使用了0%至100%的取值范围。数值越小，色彩越暗，越接近于黑色；数值越大，色彩越亮，越接近于白色
+      ring.material.color.setHSL(colors[index], 1, normLevel);//色相(H)、饱和度(S)、明度(L)
       ring.material.linewidth = normLevel * 3;
-      ring.material.opacity = normLevel;
-      ring.scale.z = normLevel;
+      ring.material.opacity = normLevel;//透明度由levels决定
+      ring.scale.z = normLevel;//Z轴高度
     });
   },
 
@@ -137,7 +144,8 @@ function ImprovedNoise () {
     89,18,169,200,196,135,130,116,188,159,86,164,100,109,198,173,186,3,64,52,217,226,250,124,123,5,
     202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,189,28,42,223,183,170,213,119,
     248,152,2,44,154,163,70,221,153,101,155,167,43,172,9,129,22,39,253,19,98,108,110,79,113,224,232,
-    178,185,112,104,218,246,97,228,251,34,242,193,238,210,144,12,191,179,162,241,81,51,145,235,249,
+    178,185,112,104,218,246,97,228,251,34,242,193,238,210,144,12,191
+    ,179,162,241,81,51,145,235,249,
     14,239,107,49,192,214,31,181,199,106,157,184,84,204,176,115,121,50,45,127,4,150,254,138,236,205,
     93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180
   ];

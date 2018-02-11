@@ -36,7 +36,7 @@ const trackConfig = [
 		subText: 'Visual Effect',
 	},
 	{
-		text: 'Todo',
+		text: 'BigBeat',
 		subText: 'Visual Effect'
 	},
 ]
@@ -55,6 +55,7 @@ AFRAME.registerComponent('menu', {
 
 		let lastClick = Date.now()
 
+		let analyserEl = this.data.analyserEl;
 		let analyserComponent = this.data.analyserEl.components.audioanalyser;
 
 		trackConfig.forEach((track, i) => {
@@ -119,11 +120,16 @@ AFRAME.registerComponent('menu', {
 				case "BeatParticle":
 					console.log("Begin BeatParticle");
 					analyserComponent.beatParticleFlag = true;
-					beatParticle.setAttribute("beat-particle", "enabled", true);
+					analyserEl.setAttribute("audioanalyser", 'enableBeatDetection', true);
 					break;
 				case "VolumeLight":
 					console.log("Begin Light");
 					analyserComponent.lightEffectFlag = true;
+					break;
+				case "BigBeat":
+					console.log("Begin BigBeat");
+					analyserComponent.bigBeatFlag = true;
+					analyserEl.setAttribute("audioanalyser", 'enableBigBeat', true);
 					break;
 				default:
 					break;
@@ -143,11 +149,16 @@ AFRAME.registerComponent('menu', {
 				case "BeatParticle":
 					console.log("Stop BeatParticle");
 					analyserComponent.beatParticleFlag = false;
-					beatParticle.setAttribute("beat-particle", "enabled", false);
+					analyserEl.setAttribute("enableBeatDetection", false);
 					break;
 				case "VolumeLight":
 					console.log("Stop Light");
 					analyserComponent.lightEffectFlag = false;
+					break;
+				case "BigBeat":
+					console.log("Stop BigBeat");
+					analyserComponent.bigBeatFlag = false;
+					analyserEl.setAttribute("audioanalyser", 'enableBigBeat', false);
 					break;
 				default:
 					break;

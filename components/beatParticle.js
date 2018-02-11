@@ -3,13 +3,12 @@ import SPE from 'shader-particle-engine';
 AFRAME.registerComponent('beat-paricle', {
     schema: {
         analyserEl: { type: 'selector' },
-        enabled: { default: false }
     },
 
     init: function () {
-        var data = this.data;
-        var analyserComponent = data.analyserEl.components.audioanalyser;
-        var el = this.el;
+        let data = this.data;
+        let analyserComponent = data.analyserEl.components.audioanalyser;
+        let el = this.el;
         el.setObject3D('beatParicle', new THREE.Object3D());
         this.emitter = new SPE.Emitter({
             type: 3,
@@ -17,7 +16,7 @@ AFRAME.registerComponent('beat-paricle', {
                 value: 2
             },
             position: {
-                value: new THREE.Vector3(0, 0, -50),
+                value: new THREE.Vector3(0, 1, -2),
                 radius: 15,
                 spread: new THREE.Vector3(0, 0, 0)
             },
@@ -30,7 +29,7 @@ AFRAME.registerComponent('beat-paricle', {
             },
 
             velocity: {
-                value: new THREE.Vector3(1, 3, 3),
+                value: new THREE.Vector3(3, 3, 3),
                 distribution: SPE.distributions.DISC
             },
 
@@ -46,8 +45,8 @@ AFRAME.registerComponent('beat-paricle', {
         });
     },
     update() {
-        var data = this.data;
-        var el = this.el;
+        let data = this.data;
+        let el = this.el;
         this.clock = new THREE.Clock();
         this.particleGroup = new SPE.Group({
             texture: {
@@ -55,28 +54,42 @@ AFRAME.registerComponent('beat-paricle', {
             },
             blending: THREE.AdditiveBlending
         });
-        this.particleGroup.addPool(1, this.emitter, false);
-
+        //this.particleGroup.addPool(1, this.emitter, false);
+        this.particleGroup.addEmitter(this.emitter);
         this.el.getObject3D('beatParicle').add(this.particleGroup.mesh);
+        
+        let particleGroup = this.particleGroup;
 
-        var particleGroup = this.particleGroup;
-        data.analyserEl.addEventListener('audioanalyser-beat', function () {
-            updateColor(particleGroup, new THREE.Color(
+        
+        data.analyserEl.addEventListener('audioanalyser-beat', ()=> {
+            let analyserComponent = this.data.analyserEl.components.audioanalyser;
+            let volume = analyserComponent.volume;
+            updateColor(this.emitter, new THREE.Color(
                 Math.random(), Math.random(), Math.random()
-            ));
+            ),volume);
         });
     },
     tick: function () {
-        var analyserComponent = this.data.analyserEl.components.audioanalyser;
+        let analyserComponent = this.data.analyserEl.components.audioanalyser;
         if (!analyserComponent.beatParticleFlag || !analyserComponent.analyser) { return; }
         this.particleGroup.tick(this.clock.getDelta());
+
+        //let  volume = analyserComponent.volume;
+
+        //TODO
+        //取得volume结合beat来做
+        //改变发射速度和生存时间
+        // this.emitter.velocity.value = new THREE.Vector3(1, 3, volume/5);
+        // this.emitter.acceleration.value = new THREE.Vector3(0, volume/2, volume/2);
+        // this.emitter.position.radius = volume/6;
+        // this.emitter.position.spread = new THREE.Vector3(0, volume/5, volume/5);
     }
 });
 
-function updateColor(particleGroup, color) {
-    if (particleGroup._pool.length) {
-        const emitter = particleGroup._pool[particleGroup._pool.length - 1];
-        emitter.color.value = color;
-    }
-    particleGroup.triggerPoolEmitter(1, new THREE.Vector3(0, 1, -2));
+function updateColor(emitter, color, volume) {
+    emitter.color.value = color;
+    emitter.velocity.value = new THREE.Vector3(1, 3, volume/5);
+    emitter.acceleration.value = new THREE.Vector3(0, volume/2, volume/2);
+    emitter.position.radius = volume/6;
+    emitter.position.spread = new THREE.Vector3(0, volume/5, volume/5);
 }

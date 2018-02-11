@@ -12,10 +12,15 @@ AFRAME.registerComponent('playbutton', {
   },
 
   init() {
+    
+  },
+
+  update() {
     let lastClick = 0
     let data = this.data;
     let analyserComponent = data.analyserEl.components.audioanalyser;
-    let context = analyserComponent.analyser.context;
+    
+    //移动端的问题是audioanalyser就已经为null了 ,放在事件里再取值
 
     this.el.addEventListener('click', () => {
       //debounce
@@ -27,14 +32,12 @@ AFRAME.registerComponent('playbutton', {
       const playing = this.el.getAttribute('playbutton').playing;
       this.el.setAttribute('playbutton', 'playing', !playing);
       if (playing) {
-        context.suspend();
+        analyserComponent.analyser.context.suspend();
       } else {
-        context.resume();
+        analyserComponent.analyser.context.resume();
       }
     })
-  },
 
-  update() {
     if (this.data.playing) {
       this.el.querySelector('a-plane').setAttribute('src', '#pause_button')
     } else {

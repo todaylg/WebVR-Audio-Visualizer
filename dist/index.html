@@ -1,88 +1,92 @@
 <html>
 
 <head>
-  <title>Music</title>
-  <link rel="stylesheet" href="/dist/010a03d104c7bbe8c6eb9a199fc9e785.css">
-  <script src="/dist/c65c8f71552f007fc2e7543804cc7ae1.js"></script>
-</head>
+    <title>Music</title>
+    <link rel="stylesheet" href="/dist/6a3e5473b258d8e147cc3e8f00f681bd.css">
+    <script src="/dist/c65c8f71552f007fc2e7543804cc7ae1.js"></script>
+<script src="/dist/6a3e5473b258d8e147cc3e8f00f681bd.js"></script></head>
 
 <body>
-  <a-scene antialias="true">
-    <a-assets>
-      <a-mixin id="bar" geometry="primitive: box" material="color: black;opacity:0.2;"></a-mixin>
-      <audio id="song" loop="" src="/dist/3c52a8d6d64a8d793ea3e76d2e9e1f92.mp3"></audio>
-      <img id="play_button" src="/dist/cd7a55570f8e5aff60793e6e053e5122.png">
-      <img id="pause_button" src="/dist/1035466dd6f72cadc4c22c7d81897a53.png">
-      <img id="floor" src="/dist/15a1dde05d05c1bff3a6792483fb127e.jpg">
-    </a-assets>
+    <a-scene antialias="true">
+        <a-assets>
+            <a-mixin id="bar" geometry="primitive: box" material="color: black;opacity:0.2;"></a-mixin>
+            <audio id="song" loop="" src="/dist/a5158ca930e3de016ed7d57e9b5bad4a.mp3"></audio>
+            <img id="play_button" src="/dist/cd7a55570f8e5aff60793e6e053e5122.png">
+            <img id="pause_button" src="/dist/1035466dd6f72cadc4c22c7d81897a53.png">
+            <img id="floor" src="/dist/15a1dde05d05c1bff3a6792483fb127e.jpg">
+        </a-assets>
 
-    <!-- camera -->
-    <a-entity camera="userHeight: 1.6;" look-controls="" wasd-controls="enabled:true;" position="0 0 0">
-      <a-entity raycaster="objects: .clickable" cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03" material="color: black; shader: flat"></a-entity>
-    </a-entity>
+        <!-- camera -->
+        <a-entity camera="userHeight: 1.6;" look-controls="" wasd-controls="enabled:true;" position="0 0 0">
+            <a-entity raycaster="objects: .clickable" cursor="fuse: true; fuseTimeout: 500" position="0 0 -1" geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03" material="color: black; shader: flat"></a-entity>
+        </a-entity>
 
-    <!-- menu -->
-    <a-entity menu="analyserEl: #analyser;" position="0 2 -2" scale="0.75 0.75 1" id="menu" class="clickable">
-      <a-animation begin="shrink" attribute="position" to="0 1.8 -2" dur="1000" easing="ease-out"></a-animation>
-      <a-animation begin="shrink" attribute="scale" to="0.5 0.5 1" dur="1000" easing="ease-out"></a-animation>
-      <a-animation begin="grow" attribute="position" to="0 2 -2" dur="2000" easing="ease-out"></a-animation>
-      <a-animation begin="grow" attribute="scale" to="0.75 0.75 1" dur="2000" easing="ease-out"></a-animation>
-    </a-entity>
+        <!-- menu -->
+        <a-entity menu="analyserEl: #analyser;" position="0 2 -2" scale="0.75 0.75 1" id="menu" class="clickable">
+            <a-animation begin="shrink" attribute="position" to="0 1.8 -2" dur="1000" easing="ease-out"></a-animation>
+            <a-animation begin="shrink" attribute="scale" to="0.5 0.5 1" dur="1000" easing="ease-out"></a-animation>
+            <a-animation begin="grow" attribute="position" to="0 2 -2" dur="2000" easing="ease-out"></a-animation>
+            <a-animation begin="grow" attribute="scale" to="0.75 0.75 1" dur="2000" easing="ease-out"></a-animation>
+        </a-entity>
 
-    <!-- play button -->
-    <a-entity class="clickable" playbutton="analyserEl: #analyser;playing:true; visible: true" position="0 1 -2" id="playButton" animate="attribute:scale; time:100;" rotation="90 0 0">
-      <a-entity>
-        <a-plane src="#pause_button" material="transparent: true" scale="0.9 0.9 0.9" position="0 0.52 0" rotation="-90 0 0"></a-plane>
-        <a-circle class="selectable" material="color: white; shader: flat;" rotation="-90 0 0">
-          <a-animation begin="mouseenter" attribute="material.color" to="rgb(100, 100, 100)" dur="0"></a-animation>
-          <a-animation begin="mouseleave" attribute="material.color" to="white" dur="0"></a-animation>
-        </a-circle>
-        <a-cylinder material="color: rgb(80, 80, 80); shader: flat;" position="0 -0.52 0" rotation="0 0 0">
-        </a-cylinder>
-        <a-animation begin="mousedown" attribute="scale" to="1 0.5 1" dur="1000"></a-animation>
-        <a-animation begin="mousedown" attribute="position" to="0 -0.5 0" dur="1000"></a-animation>
-        <a-animation begin="mouseup" attribute="scale" to="1 1 1" dur="1000"></a-animation>
-        <a-animation begin="mouseup" attribute="position" to="0 0 0" dur="1000"></a-animation>
-      </a-entity>
-    </a-entity>
+        <!-- play button -->
+        <a-entity class="clickable" playbutton="analyserEl: #analyser;playing:true; visible: true" position="0 1 -2" id="playButton" animate="attribute:scale; time:100;" rotation="90 0 0">
+            <a-entity>
+                <a-plane src="#pause_button" material="transparent: true" scale="0.9 0.9 0.9" position="0 0.52 0" rotation="-90 0 0"></a-plane>
+                <a-circle class="selectable" material="color: white; shader: flat;" rotation="-90 0 0">
+                    <a-animation begin="mouseenter" attribute="material.color" to="rgb(100, 100, 100)" dur="0"></a-animation>
+                    <a-animation begin="mouseleave" attribute="material.color" to="white" dur="0"></a-animation>
+                </a-circle>
+                <a-cylinder material="color: rgb(80, 80, 80); shader: flat;" position="0 -0.52 0" rotation="0 0 0">
+                </a-cylinder>
+                <a-animation begin="mousedown" attribute="scale" to="1 0.5 1" dur="1000"></a-animation>
+                <a-animation begin="mousedown" attribute="position" to="0 -0.5 0" dur="1000"></a-animation>
+                <a-animation begin="mouseup" attribute="scale" to="1 1 1" dur="1000"></a-animation>
+                <a-animation begin="mouseup" attribute="position" to="0 0 0" dur="1000"></a-animation>
+            </a-entity>
+        </a-entity>
 
-    <!-- analyser. -->
-    <a-entity id="analyser" audioanalyser="src: #song"></a-entity>
+        <!-- analyser. -->
+        <a-entity id="analyser" audioanalyser="src: #song"></a-entity>
 
-    <!-- Wave -->
-    <a-entity audioanalyser-waveform="analyserEl: #analyser; skyFlag:true;radius: 0.5" rotation="90 0 0"></a-entity>
-    <a-entity audioanalyser-waveform="analyserEl: #analyser; radius: 0.5" rotation="90 0 0" position="0 1 0"></a-entity>
+        <!-- Wave -->
+        <a-entity audioanalyser-waveform="analyserEl: #analyser; skyFlag:true;radius: 0.5" rotation="90 0 0"></a-entity>
+        <a-entity audioanalyser-waveform="analyserEl: #analyser; radius: 0.5" rotation="90 0 0" position="0 1 0"></a-entity>
 
-    <!-- Spectrum visualization. -->
-    <a-entity audioanalyser-levels-scale="analyserEl: #analyser; max: 50; multiplier: 0.06" entity-generator="mixin: bar; num: 128" layout="type: circle; radius: 20" rotation="0 180 0"></a-entity>
+        <!-- Spectrum visualization. -->
+        <a-entity audioanalyser-levels-scale="analyserEl: #analyser; max: 50; multiplier: 0.06" entity-generator="mixin: bar; num: 128" layout="type: circle; radius: 20" rotation="0 180 0"></a-entity>
 
-    <!-- BallLight -->
-    <a-entity ball-light="analyserEl: #analyser;ballCount:10;max: 2.2;multiplier: .018" position="0,-2,0"></a-entity>
+        <!-- BallLight -->
+        <a-entity ball-light="analyserEl: #analyser;ballCount:10;max: 2.2;multiplier: .018" position="0,-2,0"></a-entity>
 
-    <!-- BeatParicle -->
-    <a-entity id="beatParticle" beat-paricle="analyserEl: #analyser;" rotation="90 0 0" position="0 10 0"></a-entity>
+        <!-- BeatParicle -->
+        <a-entity id="beatParticle" beat-paricle="analyserEl: #analyser;" rotation="90 0 0" position="0 10 0"></a-entity>
 
-    <!-- Lights, sky, ground. -->
-    <a-light audioanalyser-volume-bind="analyserEl: #analyser; component: light; property: intensity; max: 2.2; multiplier: .008" type="point" position="0 0.5 0"></a-light>
+        <!-- BigBeat -->
+        <a-entity id="bigBeat" big-beat="analyserEl: #analyser;" rotation="0 0 0" position="0 2 0"></a-entity>
 
-    <a-sky color="#222"></a-sky>
-    <a-entity id="ground" geometry="primitive: circle; radius: 40" rotation="-90 0 0" material="src: #floor"></a-entity>
-  </a-scene>
+        <!-- Lights, sky, ground. -->
+        <a-light audioanalyser-volume-bind="analyserEl: #analyser; component: light; property: intensity; max: 2.2; multiplier: .008" type="point" position="0 0.5 0"></a-light>
 
-  <!-- Begin Panel -->
-  <div id="beginPanel">
-    <div id="container">
-      <h1 style="font-size: 80px;">WebVR</h1>
-      <h1 style="font-size: 110px;">Audio Visualizer</h1>
-      <div class="wrapper" id="wrapper">
-        <label class="button" for="file">
-          Choose a mp3 file
-          <input id="file" type="file">
-        </label>
-        <label class="button" id="beginBtn">Use sample mp3 file</label>
-      </div>
+        <a-sky color="#222"></a-sky>
+        <a-entity id="ground" geometry="primitive: circle; radius: 40" rotation="-90 0 0" material="src: #floor"></a-entity>
+
+        <!-- Env. -->
+        <!-- <a-entity snow-env="analyserEl: #analyser;"></a-entity> -->
+    </a-scene>
+
+    <!-- Begin Panel -->
+    <div id="beginPanel">
+        <span style="font-size: 5rem;margin-top: 5rem;flex:auto">WebVR</span>
+        <span style="font-size: 6rem;flex:auto;white-space: nowrap;">Audio Visualizer</span>
+        <div class="wrapper" id="wrapper" style="flex:auto;">
+            <label class="button" for="file">
+                Choose a mp3 file
+                <input id="file" type="file">
+            </label>
+            <label class="button" id="beginBtn">Use sample mp3 file</label>
+        </div>
     </div>
-  </div>
 </body>
 
 </html>

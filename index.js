@@ -1,22 +1,23 @@
-//beginPanel
-import './beginPanel/Begin.js'
-
-//lib
 import AFRAME from 'aframe';
-import './lib/aframe-audioanalyser-component.js';
+import './components/WebAudioShim';
+import './lib/aframe-audioanalyser-component';
 
-//component
-import './components/aframe-entity-generator.js';
-import './components/aframe-layout.js';
-import './components/audioanalyser-levels-scale.js';
+//Component
+import './components/aframe-entity-generator';
+import './components/aframe-layout';
+import './components/audioanalyser-levels-scale';
 
-import './components/playButton.js';
-import './components/Menu.js';
-import './components/Item.js';
+import './components/PlayButton'; 
+import './components/Menu';
+import './components/Item';
 
-import './components/audioanalyser-waveform.js';
-import './components/audioanalyser-volume-bind.js';
-import './components/ballLight.js';
-import './components/beatParticle.js';
+import './components/audioanalyser-waveform';
+import './components/audioanalyser-volume-bind';
+import './components/BallLight';
+import './components/BeatParticle';
+
+import './components/BigBeatParticle';
+
+//import './components/SnowEnv';
 
 
