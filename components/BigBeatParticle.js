@@ -17,12 +17,12 @@ AFRAME.registerComponent('big-beat', {
             },
             position: {
                 value: new THREE.Vector3(0, 1, -2),
-                spread: new THREE.Vector3( 0, 0, 0 )
+                spread: new THREE.Vector3(0, 0, 0)
             },
 
             acceleration: {
                 value: new THREE.Vector3(0, -10, 0),
-                spread: new THREE.Vector3( 10, 0, 10 )
+                spread: new THREE.Vector3(10, 0, 10)
             },
 
             velocity: {
@@ -31,7 +31,7 @@ AFRAME.registerComponent('big-beat', {
             },
 
             color: {
-                value: [ new THREE.Color('white'), new THREE.Color('red') ]
+                value: [new THREE.Color('white'), new THREE.Color('red')]
             },
 
             size: {
@@ -39,7 +39,7 @@ AFRAME.registerComponent('big-beat', {
             },
 
             particleCount: 3000,
-            activeMultiplier:0,
+            activeMultiplier: 0,
         });
     },
     update() {
@@ -55,21 +55,30 @@ AFRAME.registerComponent('big-beat', {
         //this.particleGroup.addPool(1, this.emitter, false);
         this.particleGroup.addEmitter(this.emitter);
         this.el.getObject3D('bigBeatParicle').add(this.particleGroup.mesh);
-        
+
         let particleGroup = this.particleGroup;
 
-        
-        data.analyserEl.addEventListener('audioanalyser-bigbeat', ()=> {
+
+        data.analyserEl.addEventListener('audioanalyser-bigbeat', () => {
             let analyserComponent = this.data.analyserEl.components.audioanalyser;
             let volume = analyserComponent.volume;
             updateColor(this.emitter, new THREE.Color(
                 Math.random(), Math.random(), Math.random()
-            ),volume);
+            ), volume);
         });
     },
     tick: function () {
+        let el = this.el;
+        let bigBeatParicle = el.getObject3D('bigBeatParicle');
         let analyserComponent = this.data.analyserEl.components.audioanalyser;
-        if (!analyserComponent.bigBeatFlag || !analyserComponent.analyser) { return; }
+        if (!analyserComponent.bigBeatFlag || !analyserComponent.analyser) {
+            if (bigBeatParicle.visible) bigBeatParicle.visible = false;
+            return;
+        } else {
+            if (!bigBeatParicle.visible) bigBeatParicle.visible = true;
+        }
+
+        //Calculation
         this.particleGroup.tick(this.clock.getDelta());
     }
 });

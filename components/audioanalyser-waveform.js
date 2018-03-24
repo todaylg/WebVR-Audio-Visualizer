@@ -89,8 +89,15 @@ AFRAME.registerComponent('audioanalyser-waveform', {
     var rings = this.rings;
 
     var analyserComponent = data.analyserEl.components.audioanalyser;
-    if(!analyserComponent.waveEffectFlag || !analyserComponent.analyser) { return; }
+    let waveformContainer = el.getObject3D('waveformContainer');
+    if (!analyserComponent.waveEffectFlag || !analyserComponent.analyser) {
+      if (waveformContainer.visible) waveformContainer.visible = false;
+      return;
+    } else {
+      if (!waveformContainer.visible) waveformContainer.visible = true;
+    }
 
+    //Calculation
     VOL_SENS = 2;
     //区间由128-256 => 0-256
     levels.push(analyserComponent.volume / 256 * VOL_SENS);  // 256 is max level.

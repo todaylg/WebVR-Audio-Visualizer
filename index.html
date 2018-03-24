@@ -2,6 +2,7 @@
 
 <head>
     <title>Music</title>
+    <meta charset="utf-8" />
     <link rel="stylesheet" href="./components/beginPanel/BeginPanel.css">
     <script src="./index.js"></script>
 </head>
@@ -10,10 +11,11 @@
     <a-scene antialias="true">
         <a-assets>
             <a-mixin id="bar" geometry="primitive: box" material="color: black;opacity:0.2;"></a-mixin>
-            <audio id="song" loop src="./audio/Alive.mp3"></audio>
+            <audio id="song" loop src="./audio/Outside.mp3"></audio>
             <img id="play_button" src="./images/play.png">
             <img id="pause_button" src="./images/pause.png">
             <img id="floor" src="./images/floor.jpg">
+            <img id="skyBox" src="./images/sky3.jpg">
         </a-assets>
 
         <!-- camera -->
@@ -72,7 +74,7 @@
         <a-light audioanalyser-volume-bind="analyserEl: #analyser; component: light; property: intensity; max: 2.2; multiplier: .008"
             type="point" position="0 0.5 0"></a-light>
 
-        <a-sky color="#222"></a-sky>
+        <a-sky src="#skyBox"></a-sky>
         <a-entity id="ground" geometry="primitive: circle; radius: 40" rotation="-90 0 0" material="src: #floor"></a-entity>
 
         <!-- Env. -->
@@ -83,6 +85,7 @@
     <div id="beginPanel">
         <span style="font-size: 5rem;margin-top: 5rem;flex:auto">WebVR</span>
         <span style="font-size: 6rem;flex:auto;white-space: nowrap;">Audio Visualizer</span>
+        <span style="font-size: 2rem;flex:auto;white-space: nowrap;">WASD/方向键控制移动 焦点不移动触发选择</span>
         <div class="wrapper" id="wrapper" style="flex:auto;">
             <label class="button" for="file">
                 Choose a mp3 file

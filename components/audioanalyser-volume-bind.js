@@ -15,6 +15,7 @@ AFRAME.registerComponent('audioanalyser-volume-bind', {
     var analyserComponent = data.analyserEl.components.audioanalyser;
     if(!analyserComponent.lightEffectFlag || !analyserComponent.analyser) { return; }
     
+    //Calculation only light volume
     value = Math.min(data.max, analyserComponent.volume * data.multiplier);
     el.setAttribute(data.component, data.property, value);
   }

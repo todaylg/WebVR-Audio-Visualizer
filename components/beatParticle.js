@@ -13,11 +13,11 @@ AFRAME.registerComponent('beat-paricle', {
         this.emitter = new SPE.Emitter({
             type: 3,
             maxAge: {
-                value: 2
+                value: 0.5
             },
             position: {
                 value: new THREE.Vector3(0, 1, -2),
-                radius: 15,
+                radius: 3,
                 spread: new THREE.Vector3(0, 0, 0)
             },
             rotation: {
@@ -57,21 +57,30 @@ AFRAME.registerComponent('beat-paricle', {
         //this.particleGroup.addPool(1, this.emitter, false);
         this.particleGroup.addEmitter(this.emitter);
         this.el.getObject3D('beatParicle').add(this.particleGroup.mesh);
-        
+
         let particleGroup = this.particleGroup;
 
-        
-        data.analyserEl.addEventListener('audioanalyser-beat', ()=> {
+
+        data.analyserEl.addEventListener('audioanalyser-beat', () => {
             let analyserComponent = this.data.analyserEl.components.audioanalyser;
             let volume = analyserComponent.volume;
             updateColor(this.emitter, new THREE.Color(
                 Math.random(), Math.random(), Math.random()
-            ),volume);
+            ), volume);
         });
     },
     tick: function () {
+        let el = this.el;
         let analyserComponent = this.data.analyserEl.components.audioanalyser;
-        if (!analyserComponent.beatParticleFlag || !analyserComponent.analyser) { return; }
+        let beatParicle = el.getObject3D('beatParicle');
+        if (!analyserComponent.beatParticleFlag || !analyserComponent.analyser) {
+            if (beatParicle.visible) beatParicle.visible = false;
+            return;
+        } else {
+            if (!beatParicle.visible) beatParicle.visible = true;
+        }
+
+        //Calculation
         this.particleGroup.tick(this.clock.getDelta());
 
         //let  volume = analyserComponent.volume;
@@ -88,8 +97,9 @@ AFRAME.registerComponent('beat-paricle', {
 
 function updateColor(emitter, color, volume) {
     emitter.color.value = color;
-    emitter.velocity.value = new THREE.Vector3(1, 3, volume/5);
-    emitter.acceleration.value = new THREE.Vector3(0, volume/2, volume/2);
-    emitter.position.radius = volume/6;
-    emitter.position.spread = new THREE.Vector3(0, volume/5, volume/5);
+    emitter.velocity.value = new THREE.Vector3(1, 0, 0);
+    emitter.acceleration.value = new THREE.Vector3(volume/20, 0, 0);
+    emitter.position.radius = volume / 20;
+    emitter.position.spread = new THREE.Vector3(0, 0, 0);
+    emitter.position.value = new THREE.Vector3(0, 1, -volume/5+10);
 }

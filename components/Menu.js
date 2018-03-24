@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+//TODO 这样用文字不好，应该从data传入组件？再从组件上读取文本信息
+//比如menu组件暴露接口 开关1，开关2这样接收传递进来的组件
 const trackConfig = [
 	{
 		text: 'Levels',
@@ -117,14 +119,15 @@ AFRAME.registerComponent('menu', {
 					console.log("Begin Waveform");
 					analyserComponent.waveEffectFlag = true;
 					break;
+
+				case "VolumeLight":
+					console.log("Begin Light");
+					analyserComponent.lightEffectFlag = true;//begin Calculation and render
+					break;
 				case "BeatParticle":
 					console.log("Begin BeatParticle");
 					analyserComponent.beatParticleFlag = true;
 					analyserEl.setAttribute("audioanalyser", 'enableBeatDetection', true);
-					break;
-				case "VolumeLight":
-					console.log("Begin Light");
-					analyserComponent.lightEffectFlag = true;
 					break;
 				case "BigBeat":
 					console.log("Begin BigBeat");
@@ -146,14 +149,15 @@ AFRAME.registerComponent('menu', {
 					console.log("Stop Waveform");
 					analyserComponent.waveEffectFlag = false;
 					break;
+
+				case "VolumeLight":
+					console.log("Stop Light");
+					analyserComponent.lightEffectFlag = false;
+					break;
 				case "BeatParticle":
 					console.log("Stop BeatParticle");
 					analyserComponent.beatParticleFlag = false;
 					analyserEl.setAttribute("enableBeatDetection", false);
-					break;
-				case "VolumeLight":
-					console.log("Stop Light");
-					analyserComponent.lightEffectFlag = false;
 					break;
 				case "BigBeat":
 					console.log("Stop BigBeat");

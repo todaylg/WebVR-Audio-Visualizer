@@ -18,6 +18,7 @@ AFRAME.registerComponent('ball-light', {
       this.ballLightArr.push(pointLight);
       //el.getObject3D('ballContainer').position.y = -5;
       el.getObject3D('ballContainer').add(pointLight);
+      el.getObject3D('ballContainer').visible = false;
     }
   },
 
@@ -26,8 +27,16 @@ AFRAME.registerComponent('ball-light', {
     let el = this.el;
     let value;
     let analyserComponent = data.analyserEl.components.audioanalyser;
-    if (!analyserComponent.lightEffectFlag || !analyserComponent.analyser) { return; }
+    let ballContainer = el.getObject3D('ballContainer');
+    if (!analyserComponent.lightEffectFlag || !analyserComponent.analyser) {
+      //权衡了一下还是决定将控制组件的权利从Menu归还给组件自己（多一次判断但是避免了污染sceneEl）
+      if (ballContainer.visible) ballContainer.visible = false;
+      return;
+    } else {
+      if (!ballContainer.visible) ballContainer.visible = true;
+    }
 
+     //Calculation (only position)
     value = Math.min(data.max, analyserComponent.volume * data.multiplier);
 
     let time = performance.now() * 0.001;

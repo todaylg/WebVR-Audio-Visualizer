@@ -1,9 +1,7 @@
-
 function isOnBeat() {
 	var localAverageEnergy = 0;
 	var instantCounter = 0;
 	var isBeat = false;
-
 	// fill history buffer 
 	for (var i = 0; i < this.levels.length - 1; i++ , ++instantCounter) {
 		this.historyBuffer.push(this.levels[i]);  //add sample to historyBuffer
@@ -12,6 +10,7 @@ function isOnBeat() {
 	this.sens = 1 + 0.05;
 	if (instantCounter > this.COLLECT_SIZE - 1 &&
 		this.historyBuffer.length > this.MAX_COLLECT_SIZE - 1) {
+
 		this.instantEnergy = this.instantEnergy / (this.COLLECT_SIZE * (this.analyser.fftSize / 2));
 
 		var average = 0;
@@ -97,6 +96,12 @@ function isOnBeat() {
 				return b['counter'] - a['counter']; //descending sort
 			});
 		}
+		var temp = this.historyBuffer.slice(0); //get copy of buffer
+
+		this.historyBuffer = []; //clear buffer
+
+		// make room in array by deleting the last COLLECT_SIZE samples.
+		this.historyBuffer = temp.slice(this.COLLECT_SIZE * (this.analyser.fftSize / 2), temp.length);
 
 		instantCounter = 0;
 		this.instantEnergy = 0;
