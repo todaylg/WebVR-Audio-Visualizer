@@ -29,7 +29,7 @@ AFRAME.registerComponent('beat-paricle', {
             },
 
             velocity: {
-                value: new THREE.Vector3(3, 3, 3),
+                value: new THREE.Vector3(1, 0, 0),
                 distribution: SPE.distributions.DISC
             },
 
@@ -43,14 +43,11 @@ AFRAME.registerComponent('beat-paricle', {
 
             particleCount: 5000
         });
-    },
-    update() {
-        let data = this.data;
-        let el = this.el;
+    
         this.clock = new THREE.Clock();
         this.particleGroup = new SPE.Group({
             texture: {
-                value: THREE.ImageUtils.loadTexture('/dist/smokeparticle.png')
+                value: THREE.ImageUtils.loadTexture('./smokeparticle.png')
             },
             blending: THREE.AdditiveBlending
         });
@@ -82,24 +79,12 @@ AFRAME.registerComponent('beat-paricle', {
 
         //Calculation
         this.particleGroup.tick(this.clock.getDelta());
-
-        //let  volume = analyserComponent.volume;
-
-        //TODO
-        //取得volume结合beat来做
-        //改变发射速度和生存时间
-        // this.emitter.velocity.value = new THREE.Vector3(1, 3, volume/5);
-        // this.emitter.acceleration.value = new THREE.Vector3(0, volume/2, volume/2);
-        // this.emitter.position.radius = volume/6;
-        // this.emitter.position.spread = new THREE.Vector3(0, volume/5, volume/5);
     }
 });
 
 function updateColor(emitter, color, volume) {
     emitter.color.value = color;
-    emitter.velocity.value = new THREE.Vector3(1, 0, 0);
     emitter.acceleration.value = new THREE.Vector3(volume/20, 0, 0);
     emitter.position.radius = volume / 20;
-    emitter.position.spread = new THREE.Vector3(0, 0, 0);
     emitter.position.value = new THREE.Vector3(0, 1, -volume/5+10);
 }

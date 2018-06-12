@@ -83,6 +83,10 @@ AFRAME.registerComponent('menu-item', {
 			}
 			this.data.selected = !this.data.selected;
 		})
+		
+		this.el.addEventListener('changeSubText', (text) => {
+			subText.setAttribute('value', text.detail)
+		})
 	},
 
 	_makeBorder(entered) {

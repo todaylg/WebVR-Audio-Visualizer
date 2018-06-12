@@ -1,12 +1,7 @@
 {
-  "name": "Aframe",
+  "name": "WebVR_Audio_Visualizer",
   "version": "0.0.1",
   "description": "WebVR test",
-  "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --watch",
-    "watch": "cross-env NODE_ENV=development webpack --watch --color",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
-  },
   "author": "todaylg",
   "license": "MIT",
   "devDependencies": {

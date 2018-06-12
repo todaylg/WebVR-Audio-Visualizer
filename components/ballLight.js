@@ -1,6 +1,7 @@
 AFRAME.registerComponent('ball-light', {
   schema: {
     analyserEl: { type: 'selector' },
+    camera: { type: 'selector' },
     max: { type: 'number' },
     multiplier: { type: 'number' },
     ballCount: { default: 6 }
@@ -16,10 +17,10 @@ AFRAME.registerComponent('ball-light', {
         Math.random(), Math.random(), Math.random()
       ).getHexString());
       this.ballLightArr.push(pointLight);
-      //el.getObject3D('ballContainer').position.y = -5;
       el.getObject3D('ballContainer').add(pointLight);
       el.getObject3D('ballContainer').visible = false;
     }
+    this.ballContainer = el.getObject3D('ballContainer');
   },
 
   tick: function () {
@@ -36,17 +37,22 @@ AFRAME.registerComponent('ball-light', {
       if (!ballContainer.visible) ballContainer.visible = true;
     }
 
-     //Calculation (only position)
-    value = Math.min(data.max, analyserComponent.volume * data.multiplier);
+    let targetPos = data.camera.getAttribute('position');
+    this.ballContainer.position.x = targetPos.x;//跟随摄像机
+    this.ballContainer.position.y = targetPos.y;
+    this.ballContainer.position.z = targetPos.z;
 
-    let time = performance.now() * 0.001;
+    //Calculation (only position)
+    value = Math.min(data.max, analyserComponent.volume / 255 * data.multiplier);
+
+    let time = performance.now() * 0.001;//和JavaScript中其他可用的时间类函数(比如Date.now)不同的是,window.performance.now()返回的时间戳没有被限制在一毫秒的精确度内,而它使用了一个浮点数来达到微秒级别的精确度.另外一个不同点是,window.performance.now()是以一个恒定的速率慢慢增加的,它不会受到系统时间的影响(可能被其他软件调整)。另外，performance.timing.navigationStart + performance.now() 约等于 Date.now()。
     for (i = 0; i < this.ballLightArr.length; i++) {//init
       let pointLight = this.ballLightArr[i];
       pointLight.intensity = value;
 
-      pointLight.position.x = Math.sin(time * 0.6) * 9;//[0,9]
-      pointLight.position.y = Math.sin(time * 0.7) * 9 + 10;//[10,19]
-      pointLight.position.z = Math.sin(time * 0.8) * 9;//[0,9]
+      pointLight.position.x = Math.sin(time * 0.6) * 9;//[-9,9]
+      pointLight.position.y = Math.sin(time * 0.7) * 9 + 10;//[1,19]
+      pointLight.position.z = Math.sin(time * 0.8) * 9;//[-9,9]
 
       pointLight.rotation.x = time;
       pointLight.rotation.z = time;
@@ -80,6 +86,7 @@ function createLight(color) {
 
   geometry = new THREE.SphereGeometry(0.5, 32, 8);
   material = new THREE.MeshPhongMaterial({
+    color: color,
     side: THREE.DoubleSide,
     alphaMap: texture,
     alphaTest: 0.5

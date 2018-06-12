@@ -14,32 +14,39 @@
  * limitations under the License.
  */
 
-//TODO 这样用文字不好，应该从data传入组件？再从组件上读取文本信息
 //比如menu组件暴露接口 开关1，开关2这样接收传递进来的组件
 const trackConfig = [
 	{
 		text: 'Levels',
-		subText: 'Visual Effect'
+		subText: 'ZHeight Color'
 	},
 	{
 		text: 'Waveform',
-		subText: 'Visual Effect',
+		subText: 'ZHeight Color Opacity',
 	},
 	{
 		text: 'BeatParticle',
-		subText: 'Visual Effect',
+		subText: 'Pre-analysis Color ZHeight Radius Acceleration',
 	},
 	{
 		text: 'VolumeLight',
-		subText: 'Visual Effect',
+		subText: 'Intensity',
 	},
 	{
-		text: 'Todo',
-		subText: 'Visual Effect',
+		text: 'PositionChange',
+		subText: 'For No VR Controll',
 	},
 	{
 		text: 'BigBeat',
-		subText: 'Visual Effect'
+		subText: 'Real-time-analysis Color'
+	},
+	{
+		text: 'EnvEffect',
+		subText: 'none'
+	},
+	{
+		text: '3DLyric',
+		subText: 'Effect'
 	},
 ]
 
@@ -49,6 +56,7 @@ AFRAME.registerComponent('menu', {
 			type: 'boolean',
 			default: true
 		},
+		camera: { type: 'selector' },
 		analyserEl: { type: 'selector' },
 	},
 	init() {
@@ -68,24 +76,27 @@ AFRAME.registerComponent('menu', {
 			})
 			this.el.appendChild(plane)
 
+			//问题标记：这样Item的扩展性为0，7个就得懵了
+
 			const rotated = i !== 1 && i !== 4
 			const moveForward = 0.07
 
-			if (i < 3) {
+			if (i < 4) {
 				//top row
-				plane.setAttribute('position', `${(i - 1)} 0 ${rotated ? moveForward : 0}`)
+				plane.setAttribute('position', `${(i - 1.5)} 0 0}`)
 			} else {
 				//bottom row
-				plane.setAttribute('position', `${(i - 4)} -0.76 ${rotated ? moveForward : 0}`)
+				plane.setAttribute('position', `${(i - 5.5)} -0.76 0}`)
 			}
 
-			const angle = 8
-			if (i === 0 || i === 3) {
-				plane.setAttribute('rotation', `0 ${angle} 0`)
-			} else if (i === 2 || i === 5) {
-				plane.setAttribute('rotation', `0 ${-angle} 0`)
-			}
+			// const angle = 8
+			// if (i === 0 || i === 3) {
+			// 	plane.setAttribute('rotation', `0 ${angle} 0`)
+			// } else if (i === 2 || i === 5) {
+			// 	plane.setAttribute('rotation', `0 ${-angle} 0`)
+			// }
 
+			//每个Item添加监听事件
 			plane.addEventListener('click', () => {
 				if (Date.now() - lastClick > 500) {
 					lastClick = Date.now()
@@ -107,7 +118,7 @@ AFRAME.registerComponent('menu', {
 			})
 		})
 		//事件处理
-		let beatParticle = document.getElementById("beatParticle");
+		//？？？？let beatParticle = document.getElementById("beatParticle");
 		this.el.addEventListener('select', (track) => {
 			console.log("选择" + track.detail.text);
 			switch (track.detail.text) {
@@ -133,6 +144,18 @@ AFRAME.registerComponent('menu', {
 					console.log("Begin BigBeat");
 					analyserComponent.bigBeatFlag = true;
 					analyserEl.setAttribute("audioanalyser", 'enableBigBeat', true);
+					break;
+				case "PositionChange":
+					console.log("PositionChange");
+					this.data.camera.setAttribute('position', { x: -13.0, y: 1.6, z: 13.0 });
+					break;
+				case "EnvEffect":
+					analyserComponent.envEffectIndex++;
+					analyserComponent.envEffectIndex = analyserComponent.envEffectIndex % analyserComponent.convolutionInfo.length;
+					//赶时间了，暴力方法
+					this.el.children[10].emit('changeSubText', analyserComponent.convolutionInfo[analyserComponent.envEffectIndex].name);
+
+					setConvolution(analyserComponent.envEffectIndex);
 					break;
 				default:
 					break;
@@ -164,9 +187,27 @@ AFRAME.registerComponent('menu', {
 					analyserComponent.bigBeatFlag = false;
 					analyserEl.setAttribute("audioanalyser", 'enableBigBeat', false);
 					break;
+				case "PositionChange":
+					this.data.camera.setAttribute('position', { x: 0, y: 1.6, z: 0 });
+					break;
+				case "EnvEffect":
+					//赶时间了，暴力方法
+					this.el.children[10].emit('changeSubText', 'none');
+					setConvolution(-1);
+					break;
 				default:
 					break;
 			}
 		})
+		function setConvolution(index) {
+			analyserComponent.sourceGainNode.gain.value = 0.8;
+			for (i = 0; i < analyserComponent.gainNodes.length; i++) {
+				analyserComponent.gainNodes[i].gain.value = 0.0;
+			}
+			if (index >= 0) {
+				analyserComponent.gainNodes[index].gain.value = analyserComponent.convolutionInfo[index].sendGain;
+				analyserComponent.sourceGainNode.gain.value = analyserComponent.convolutionInfo[index].mainGain;
+			}
+		}
 	}
 })

@@ -48,7 +48,7 @@ AFRAME.registerComponent('big-beat', {
         this.clock = new THREE.Clock();
         this.particleGroup = new SPE.Group({
             texture: {
-                value: THREE.ImageUtils.loadTexture('/dist/smokeparticle.png')
+                value: THREE.ImageUtils.loadTexture('./smokeparticle.png')
             },
             blending: THREE.AdditiveBlending
         });
