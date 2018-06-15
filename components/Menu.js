@@ -42,11 +42,11 @@ const trackConfig = [
 	},
 	{
 		text: 'EnvEffect',
-		subText: 'none'
+		subText: 'AnalyserNode'
 	},
 	{
-		text: '3DLyric',
-		subText: 'Effect'
+		text: 'GraffitiEffect',
+		subText: 'Pre-analysis Color'
 	},
 ]
 
@@ -148,6 +148,7 @@ AFRAME.registerComponent('menu', {
 				case "PositionChange":
 					console.log("PositionChange");
 					this.data.camera.setAttribute('position', { x: -13.0, y: 1.6, z: 13.0 });
+					this.data.camera.setAttribute('rotation', { x: 19.19785908681687, y: -41.711327485523945, z: 0 });
 					break;
 				case "EnvEffect":
 					analyserComponent.envEffectIndex++;
@@ -156,6 +157,11 @@ AFRAME.registerComponent('menu', {
 					this.el.children[10].emit('changeSubText', analyserComponent.convolutionInfo[analyserComponent.envEffectIndex].name);
 
 					setConvolution(analyserComponent.envEffectIndex);
+					break;
+				case "GraffitiEffect":
+					console.log("Begin GraffitiEffect");
+					analyserComponent.eyesDraw = true;
+					analyserEl.setAttribute("audioanalyser", 'enableEyesDraw', true);
 					break;
 				default:
 					break;
@@ -189,11 +195,18 @@ AFRAME.registerComponent('menu', {
 					break;
 				case "PositionChange":
 					this.data.camera.setAttribute('position', { x: 0, y: 1.6, z: 0 });
+					// console.log(this.data.camera);
+					// this.data.camera.lookAt({x:0,y:0,z:0});
 					break;
 				case "EnvEffect":
 					//赶时间了，暴力方法
 					this.el.children[10].emit('changeSubText', 'none');
 					setConvolution(-1);
+					break;
+				case "GraffitiEffect":
+					console.log("Stop GraffitiEffect");
+					analyserComponent.eyesDraw = false;
+					analyserEl.setAttribute("audioanalyser", 'enableEyesDraw', false);
 					break;
 				default:
 					break;

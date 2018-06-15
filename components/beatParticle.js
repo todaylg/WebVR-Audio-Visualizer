@@ -1,4 +1,5 @@
 import SPE from 'shader-particle-engine';
+import smokeparticle from '/assets/images/smokeparticle.png';
 
 AFRAME.registerComponent('beat-paricle', {
     schema: {
@@ -47,7 +48,7 @@ AFRAME.registerComponent('beat-paricle', {
         this.clock = new THREE.Clock();
         this.particleGroup = new SPE.Group({
             texture: {
-                value: THREE.ImageUtils.loadTexture('./smokeparticle.png')
+                value: THREE.ImageUtils.loadTexture(smokeparticle)
             },
             blending: THREE.AdditiveBlending
         });
@@ -55,15 +56,18 @@ AFRAME.registerComponent('beat-paricle', {
         this.particleGroup.addEmitter(this.emitter);
         this.el.getObject3D('beatParicle').add(this.particleGroup.mesh);
 
-        let particleGroup = this.particleGroup;
-
-
         data.analyserEl.addEventListener('audioanalyser-beat', () => {
             let analyserComponent = this.data.analyserEl.components.audioanalyser;
             let volume = analyserComponent.volume;
-            updateColor(this.emitter, new THREE.Color(
+            updateColor(this.emitter, [new THREE.Color(
                 Math.random(), Math.random(), Math.random()
-            ), volume);
+            ),new THREE.Color(
+                Math.random(), Math.random(), Math.random()
+            ),new THREE.Color(
+                Math.random(), Math.random(), Math.random()
+            ),new THREE.Color(
+                Math.random(), Math.random(), Math.random()
+            )], volume);
         });
     },
     tick: function () {

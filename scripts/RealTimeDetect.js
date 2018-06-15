@@ -55,32 +55,4 @@ function isOnBeat() {
 	return isBeat;
 }
 
-//Origin Method 
-
-// Beat detection.
-// Track a threshold volume level.
-// If the current volume exceeds the threshold then you have a beat.Set the new threshold to the current volume.
-// Reduce the threshold over time, using the Decay Rate.
-// Wait for the Hold Time before detecting for the next beat.This can help reduce false positives.
-
-// var BEAT_DECAY_RATE = 0.99;
-// var BEAT_HOLD = 60;
-// var BEAT_MIN = 0.15;  // Volume less than this is no beat.
-
-// var volume = this.volume;
-// if (!this.beatCutOff) { this.beatCutOff = volume; }
-// if (volume > this.beatCutOff && volume > BEAT_MIN) {
-// 	this.el.emit('audioanalyser-beat');
-// 	this.beatCutOff = volume * 1.5;//beatCutOff抬上去
-// 	this.beatTime = 0;
-// } else {
-// 	if (this.beatTime <= BEAT_HOLD) {
-// 		this.beatTime++;
-// 	} else {
-// 		this.beatCutOff *= BEAT_DECAY_RATE;//beatCutOff往下降
-// 		this.beatCutOff = Math.max(this.beatCutOff, BEAT_MIN);
-// 	}
-// }
-
-
 export default isOnBeat;

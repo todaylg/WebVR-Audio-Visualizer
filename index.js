@@ -25,6 +25,9 @@ import './components/BeatParticle';
 //喷射粒子（实时分析）
 import './components/BigBeatParticle';
 
+//视线绘画
+import './components/EyesDraw';
+
 //实验效果
 //import './components/Fire';
 //import './components/SnowEnv';

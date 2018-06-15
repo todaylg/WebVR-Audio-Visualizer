@@ -1,4 +1,5 @@
 import SPE from 'shader-particle-engine';
+import smokeparticle from '/assets/images/smokeparticle.png';
 
 AFRAME.registerComponent('big-beat', {
     schema: {
@@ -48,7 +49,7 @@ AFRAME.registerComponent('big-beat', {
         this.clock = new THREE.Clock();
         this.particleGroup = new SPE.Group({
             texture: {
-                value: THREE.ImageUtils.loadTexture('./smokeparticle.png')
+                value: THREE.ImageUtils.loadTexture(smokeparticle)
             },
             blending: THREE.AdditiveBlending
         });
@@ -56,15 +57,18 @@ AFRAME.registerComponent('big-beat', {
         this.particleGroup.addEmitter(this.emitter);
         this.el.getObject3D('bigBeatParicle').add(this.particleGroup.mesh);
 
-        let particleGroup = this.particleGroup;
-
-
         data.analyserEl.addEventListener('audioanalyser-bigbeat', () => {
             let analyserComponent = this.data.analyserEl.components.audioanalyser;
             let volume = analyserComponent.volume;
-            updateColor(this.emitter, new THREE.Color(
+            updateColor(this.emitter, [new THREE.Color(
                 Math.random(), Math.random(), Math.random()
-            ), volume);
+            ),new THREE.Color(
+                Math.random(), Math.random(), Math.random()
+            ),new THREE.Color(
+                Math.random(), Math.random(), Math.random()
+            ),new THREE.Color(
+                Math.random(), Math.random(), Math.random()
+            )], volume);
         });
     },
     tick: function () {
@@ -83,10 +87,13 @@ AFRAME.registerComponent('big-beat', {
     }
 });
 
+let timer = null;
+
 function updateColor(emitter, color, volume) {
+    clearTimeout(timer);
     emitter.color.value = color;
     emitter.activeMultiplier = 1;
-    setTimeout(() => {
+    timer = setTimeout(() => {
         emitter.activeMultiplier = 0;
     }, 200);
 }

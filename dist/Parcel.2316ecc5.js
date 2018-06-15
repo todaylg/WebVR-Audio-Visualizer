@@ -98,7 +98,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({33:[function(require,module,exports) {
+})({35:[function(require,module,exports) {
 
 // shim for using process in browser
 var process = module.exports = {};
@@ -285,7 +285,7 @@ process.chdir = function (dir) {
 process.umask = function () {
     return 0;
 };
-},{}],36:[function(require,module,exports) {
+},{}],38:[function(require,module,exports) {
 'use strict'
 
 exports.byteLength = byteLength
@@ -438,7 +438,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],35:[function(require,module,exports) {
+},{}],37:[function(require,module,exports) {
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = (nBytes * 8) - mLen - 1
@@ -524,14 +524,14 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],34:[function(require,module,exports) {
+},{}],36:[function(require,module,exports) {
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],32:[function(require,module,exports) {
+},{}],34:[function(require,module,exports) {
 
 var global = arguments[3];
 /*!
@@ -2324,7 +2324,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":36,"ieee754":35,"isarray":34,"buffer":32}],21:[function(require,module,exports) {
+},{"base64-js":38,"ieee754":37,"isarray":36,"buffer":34}],22:[function(require,module,exports) {
 var define;
 var global = arguments[3];
 var process = require("process");
@@ -78626,13 +78626,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		}, { "./util.js": 204 }] }, {}, [171])(171);
 });
 //# sourceMappingURL=aframe-master.js.map
-},{"process":33,"buffer":32}],9:[function(require,module,exports) {
+},{"process":35,"buffer":34}],10:[function(require,module,exports) {
 /**
  * Shim to get AudioContext
  */
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 window.OfflineAudioContext = window.OfflineAudioContext || window.webkitOfflineAudioContext;
-},{}],23:[function(require,module,exports) {
+},{}],24:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -78644,7 +78644,7 @@ var config = {
 };
 
 exports.default = config;
-},{}],30:[function(require,module,exports) {
+},{}],33:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -78718,7 +78718,6 @@ function LoadBuffer(context, url, onLoad, onComplete, onError) {
 	}
 
 	request.onload = function () {
-		console.log(request);debugger;
 		context.decodeAudioData(request.response, function (buffer) {
 			//解码
 			//回调一下
@@ -78767,7 +78766,7 @@ function GetPeaks(data) {
 }
 
 exports.default = PreAnalysis;
-},{"./config":23}],27:[function(require,module,exports) {
+},{"./config":24}],30:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -78890,7 +78889,7 @@ function BeginPanel(context, analyser, bigBeatArr, convolutionNodes, gainNodes, 
 }
 
 exports.default = BeginPanel;
-},{"../../scripts/config":23,"../../scripts/PreAnalysis":30}],25:[function(require,module,exports) {
+},{"../../scripts/config":24,"../../scripts/PreAnalysis":33}],28:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -78950,36 +78949,8 @@ function isOnBeat() {
 	return isBeat;
 }
 
-//Origin Method 
-
-// Beat detection.
-// Track a threshold volume level.
-// If the current volume exceeds the threshold then you have a beat.Set the new threshold to the current volume.
-// Reduce the threshold over time, using the Decay Rate.
-// Wait for the Hold Time before detecting for the next beat.This can help reduce false positives.
-
-// var BEAT_DECAY_RATE = 0.99;
-// var BEAT_HOLD = 60;
-// var BEAT_MIN = 0.15;  // Volume less than this is no beat.
-
-// var volume = this.volume;
-// if (!this.beatCutOff) { this.beatCutOff = volume; }
-// if (volume > this.beatCutOff && volume > BEAT_MIN) {
-// 	this.el.emit('audioanalyser-beat');
-// 	this.beatCutOff = volume * 1.5;//beatCutOff抬上去
-// 	this.beatTime = 0;
-// } else {
-// 	if (this.beatTime <= BEAT_HOLD) {
-// 		this.beatTime++;
-// 	} else {
-// 		this.beatCutOff *= BEAT_DECAY_RATE;//beatCutOff往下降
-// 		this.beatCutOff = Math.max(this.beatCutOff, BEAT_MIN);
-// 	}
-// }
-
-
 exports.default = isOnBeat;
-},{}],26:[function(require,module,exports) {
+},{}],29:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -79061,7 +79032,7 @@ function initEnvEffect(context) {
 }
 
 exports.default = initEnvEffect;
-},{}],10:[function(require,module,exports) {
+},{}],9:[function(require,module,exports) {
 'use strict';
 
 var _BeginPanel = require('./beginPanel/BeginPanel');
@@ -79088,7 +79059,8 @@ AFRAME.registerComponent('audioanalyser', {
 		smoothingTimeConstant: { default: 0.8 },
 		src: { type: 'selector' },
 		enableBeatDetection: { default: false }, //实时检测算法默认关闭
-		enableBigBeat: { default: false }
+		enableBigBeat: { default: false },
+		enableEyesDraw: { default: false }
 	},
 
 	init: function init() {
@@ -79099,6 +79071,7 @@ AFRAME.registerComponent('audioanalyser', {
 		this.waveEffectFlag = false; //相当于全局变量
 		this.levelsEffectFlag = false;
 		this.lightEffectFlag = false;
+		this.eyesDraw = false;
 
 		this.prevTime = 0;
 		this.bpmTable = [];
@@ -79187,7 +79160,7 @@ AFRAME.registerComponent('audioanalyser', {
 			}
 		}
 
-		if (data.enableBigBeat) {
+		if (data.enableBigBeat || data.enableEyesDraw) {
 			var now = Math.floor(this.audio.currentTime / this.audio.duration * 10000);
 			if (this.bigBeatArr.includes(now)) {
 				if (this.oldNow === now) return; //防止触发两次（精度原因）
@@ -79197,7 +79170,7 @@ AFRAME.registerComponent('audioanalyser', {
 		}
 	}
 });
-},{"./beginPanel/BeginPanel":27,"../scripts/RealTimeDetect":25,"../scripts/EnvEffect":26}],11:[function(require,module,exports) {
+},{"./beginPanel/BeginPanel":30,"../scripts/RealTimeDetect":28,"../scripts/EnvEffect":29}],11:[function(require,module,exports) {
 //播放按钮
 AFRAME.registerComponent('playbutton', {
   schema: {
@@ -79289,10 +79262,10 @@ var trackConfig = [{
 	subText: 'Real-time-analysis Color'
 }, {
 	text: 'EnvEffect',
-	subText: 'none'
+	subText: 'AnalyserNode'
 }, {
-	text: '3DLyric',
-	subText: 'Effect'
+	text: 'GraffitiEffect',
+	subText: 'Pre-analysis Color'
 }];
 
 AFRAME.registerComponent('menu', {
@@ -79395,6 +79368,7 @@ AFRAME.registerComponent('menu', {
 				case "PositionChange":
 					console.log("PositionChange");
 					_this.data.camera.setAttribute('position', { x: -13.0, y: 1.6, z: 13.0 });
+					_this.data.camera.setAttribute('rotation', { x: 19.19785908681687, y: -41.711327485523945, z: 0 });
 					break;
 				case "EnvEffect":
 					analyserComponent.envEffectIndex++;
@@ -79403,6 +79377,11 @@ AFRAME.registerComponent('menu', {
 					_this.el.children[10].emit('changeSubText', analyserComponent.convolutionInfo[analyserComponent.envEffectIndex].name);
 
 					setConvolution(analyserComponent.envEffectIndex);
+					break;
+				case "GraffitiEffect":
+					console.log("Begin GraffitiEffect");
+					analyserComponent.eyesDraw = true;
+					analyserEl.setAttribute("audioanalyser", 'enableEyesDraw', true);
 					break;
 				default:
 					break;
@@ -79436,11 +79415,18 @@ AFRAME.registerComponent('menu', {
 					break;
 				case "PositionChange":
 					_this.data.camera.setAttribute('position', { x: 0, y: 1.6, z: 0 });
+					// console.log(this.data.camera);
+					// this.data.camera.lookAt({x:0,y:0,z:0});
 					break;
 				case "EnvEffect":
 					//赶时间了，暴力方法
 					_this.el.children[10].emit('changeSubText', 'none');
 					setConvolution(-1);
+					break;
+				case "GraffitiEffect":
+					console.log("Stop GraffitiEffect");
+					analyserComponent.eyesDraw = false;
+					analyserEl.setAttribute("audioanalyser", 'enableEyesDraw', false);
 					break;
 				default:
 					break;
@@ -79458,7 +79444,7 @@ AFRAME.registerComponent('menu', {
 		}
 	}
 });
-},{}],13:[function(require,module,exports) {
+},{}],14:[function(require,module,exports) {
 /**
  * Copyright 2017 Google Inc.
  *
@@ -79567,7 +79553,7 @@ AFRAME.registerComponent('menu-item', {
 		this.bgElement.setAttribute('material', 'color', this.data.selected ? this.selectedColor : this.darkGray);
 	}
 });
-},{}],14:[function(require,module,exports) {
+},{}],13:[function(require,module,exports) {
 'use strict';
 
 var _config = require('../scripts/config');
@@ -79598,7 +79584,7 @@ AFRAME.registerComponent('entity-generator', {
         }
     }
 });
-},{"../scripts/config":23}],15:[function(require,module,exports) {
+},{"../scripts/config":24}],17:[function(require,module,exports) {
 if (typeof AFRAME === 'undefined') {
     throw new Error('Component attempted to register before AFRAME was available.');
 }
@@ -79791,7 +79777,7 @@ function setPositions(els, positions) {
         });
     });
 }
-},{}],24:[function(require,module,exports) {
+},{}],26:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -79848,7 +79834,7 @@ function ImprovedNoise() {
 }
 
 exports.default = ImprovedNoise;
-},{}],16:[function(require,module,exports) {
+},{}],15:[function(require,module,exports) {
 'use strict';
 
 var _perlinNoise = require('../scripts/perlinNoise');
@@ -79909,7 +79895,7 @@ AFRAME.registerComponent('levels-scale', {
     }
   }
 });
-},{"../scripts/perlinNoise":24,"../scripts/config":23}],17:[function(require,module,exports) {
+},{"../scripts/perlinNoise":26,"../scripts/config":24}],16:[function(require,module,exports) {
 'use strict';
 
 var _perlinNoise = require('../scripts/perlinNoise');
@@ -80056,7 +80042,7 @@ AFRAME.registerComponent('waveform', {
     this.el.removeObject3D('waveformContainer');
   }
 });
-},{"../scripts/perlinNoise":24}],18:[function(require,module,exports) {
+},{"../scripts/perlinNoise":26}],18:[function(require,module,exports) {
 AFRAME.registerComponent('ball-light', {
   schema: {
     analyserEl: { type: 'selector' },
@@ -80178,7 +80164,7 @@ function generateTexture() {
 
   return canvas;
 }
-},{}],28:[function(require,module,exports) {
+},{}],31:[function(require,module,exports) {
 var define;
 /* shader-particle-engine 1.0.6
  * 
@@ -80225,12 +80211,18 @@ this.attributes.rotationCenter.typedArray.setVec3(a,this.rotation._center)},SPE.
 "use strict";this.particlesPerSecond=0,this.attributeOffset=0,this.activationIndex=0,this.activeParticleCount=0,this.group=null,this.attributes=null,this.paramsArray=null,this.age=0},SPE.Emitter.prototype._decrementParticleCount=function(){"use strict";--this.activeParticleCount},SPE.Emitter.prototype._incrementParticleCount=function(){"use strict";++this.activeParticleCount},SPE.Emitter.prototype._checkParticleAges=function(a,b,c,d){"use strict";for(var e,f,g,h,i=b-1;i>=a;--i)e=4*i,h=c[e],0!==h&&(g=c[e+1],f=c[e+2],1===this.direction?(g+=d,g>=f&&(g=0,h=0,this._decrementParticleCount())):(g-=d,0>=g&&(g=f,h=0,this._decrementParticleCount())),c[e]=h,c[e+1]=g,this._updateAttributeUpdateRange("params",i))},SPE.Emitter.prototype._activateParticles=function(a,b,c,d){"use strict";for(var e,f,g=this.direction,h=a;b>h;++h)e=4*h,0!=c[e]&&1!==this.particleCount||(this._incrementParticleCount(),c[e]=1,this._resetParticle(h),f=d*(h-a),c[e+1]=-1===g?c[e+2]-f:f,this._updateAttributeUpdateRange("params",h));
 },SPE.Emitter.prototype.tick=function(a){"use strict";if(!this.isStatic){null===this.paramsArray&&(this.paramsArray=this.attributes.params.typedArray.array);var b=this.attributeOffset,c=b+this.particleCount,d=this.paramsArray,e=this.particlesPerSecond*this.activeMultiplier*a,f=this.activationIndex;if(this._resetBufferRanges(),this._checkParticleAges(b,c,d,a),this.alive===!1)return void(this.age=0);if(null!==this.duration&&this.age>this.duration)return this.alive=!1,void(this.age=0);var g=1===this.particleCount?f:0|f,h=Math.min(g+e,this.activationEnd),i=h-this.activationIndex|0,j=i>0?a/i:0;this._activateParticles(g,h,d,j),this.activationIndex+=e,this.activationIndex>c&&(this.activationIndex=b),this.age+=a}},SPE.Emitter.prototype.reset=function(a){"use strict";if(this.age=0,this.alive=!1,a===!0){for(var b,c=this.attributeOffset,d=c+this.particleCount,e=this.paramsArray,f=this.attributes.params.bufferAttribute,g=d-1;g>=c;--g)b=4*g,e[b]=0,e[b+1]=0;f.updateRange.offset=0,f.updateRange.count=-1,
 f.needsUpdate=!0}return this},SPE.Emitter.prototype.enable=function(){"use strict";return this.alive=!0,this},SPE.Emitter.prototype.disable=function(){"use strict";return this.alive=!1,this},SPE.Emitter.prototype.remove=function(){"use strict";return null!==this.group?this.group.removeEmitter(this):console.error("Emitter does not belong to a group, cannot remove."),this};
+},{}],27:[function(require,module,exports) {
+module.exports="/smokeparticle.379b5134.png";
 },{}],19:[function(require,module,exports) {
 'use strict';
 
 var _shaderParticleEngine = require('shader-particle-engine');
 
 var _shaderParticleEngine2 = _interopRequireDefault(_shaderParticleEngine);
+
+var _smokeparticle = require('/assets/images/smokeparticle.png');
+
+var _smokeparticle2 = _interopRequireDefault(_smokeparticle);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -80283,7 +80275,7 @@ AFRAME.registerComponent('beat-paricle', {
         this.clock = new THREE.Clock();
         this.particleGroup = new _shaderParticleEngine2.default.Group({
             texture: {
-                value: THREE.ImageUtils.loadTexture('./smokeparticle.png')
+                value: THREE.ImageUtils.loadTexture(_smokeparticle2.default)
             },
             blending: THREE.AdditiveBlending
         });
@@ -80291,12 +80283,10 @@ AFRAME.registerComponent('beat-paricle', {
         this.particleGroup.addEmitter(this.emitter);
         this.el.getObject3D('beatParicle').add(this.particleGroup.mesh);
 
-        var particleGroup = this.particleGroup;
-
         data.analyserEl.addEventListener('audioanalyser-beat', function () {
             var analyserComponent = _this.data.analyserEl.components.audioanalyser;
             var volume = analyserComponent.volume;
-            updateColor(_this.emitter, new THREE.Color(Math.random(), Math.random(), Math.random()), volume);
+            updateColor(_this.emitter, [new THREE.Color(Math.random(), Math.random(), Math.random()), new THREE.Color(Math.random(), Math.random(), Math.random()), new THREE.Color(Math.random(), Math.random(), Math.random()), new THREE.Color(Math.random(), Math.random(), Math.random())], volume);
         });
     },
     tick: function tick() {
@@ -80321,12 +80311,16 @@ function updateColor(emitter, color, volume) {
     emitter.position.radius = volume / 20;
     emitter.position.value = new THREE.Vector3(0, 1, -volume / 5 + 10);
 }
-},{"shader-particle-engine":28}],20:[function(require,module,exports) {
+},{"shader-particle-engine":31,"/assets/images/smokeparticle.png":27}],20:[function(require,module,exports) {
 'use strict';
 
 var _shaderParticleEngine = require('shader-particle-engine');
 
 var _shaderParticleEngine2 = _interopRequireDefault(_shaderParticleEngine);
+
+var _smokeparticle = require('/assets/images/smokeparticle.png');
+
+var _smokeparticle2 = _interopRequireDefault(_smokeparticle);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -80380,7 +80374,7 @@ AFRAME.registerComponent('big-beat', {
         this.clock = new THREE.Clock();
         this.particleGroup = new _shaderParticleEngine2.default.Group({
             texture: {
-                value: THREE.ImageUtils.loadTexture('./smokeparticle.png')
+                value: THREE.ImageUtils.loadTexture(_smokeparticle2.default)
             },
             blending: THREE.AdditiveBlending
         });
@@ -80388,12 +80382,10 @@ AFRAME.registerComponent('big-beat', {
         this.particleGroup.addEmitter(this.emitter);
         this.el.getObject3D('bigBeatParicle').add(this.particleGroup.mesh);
 
-        var particleGroup = this.particleGroup;
-
         data.analyserEl.addEventListener('audioanalyser-bigbeat', function () {
             var analyserComponent = _this.data.analyserEl.components.audioanalyser;
             var volume = analyserComponent.volume;
-            updateColor(_this.emitter, new THREE.Color(Math.random(), Math.random(), Math.random()), volume);
+            updateColor(_this.emitter, [new THREE.Color(Math.random(), Math.random(), Math.random()), new THREE.Color(Math.random(), Math.random(), Math.random()), new THREE.Color(Math.random(), Math.random(), Math.random()), new THREE.Color(Math.random(), Math.random(), Math.random())], volume);
         });
     },
 
@@ -80413,14 +80405,153 @@ AFRAME.registerComponent('big-beat', {
     }
 });
 
+var timer = null;
+
 function updateColor(emitter, color, volume) {
+    clearTimeout(timer);
     emitter.color.value = color;
     emitter.activeMultiplier = 1;
-    setTimeout(function () {
+    timer = setTimeout(function () {
         emitter.activeMultiplier = 0;
     }, 200);
 }
-},{"shader-particle-engine":28}],2:[function(require,module,exports) {
+},{"shader-particle-engine":31,"/assets/images/smokeparticle.png":27}],21:[function(require,module,exports) {
+'use strict';
+
+var _shaderParticleEngine = require('shader-particle-engine');
+
+var _shaderParticleEngine2 = _interopRequireDefault(_shaderParticleEngine);
+
+var _smokeparticle = require('/assets/images/smokeparticle.png');
+
+var _smokeparticle2 = _interopRequireDefault(_smokeparticle);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+AFRAME.registerComponent('eyes-draw', {
+    schema: {
+        analyserEl: { type: 'selector' },
+        camera: { type: 'selector' },
+        enabled: { default: true },
+        distance: { default: 10 },
+        rightClickFlag: { default: false }
+    },
+
+    init: function init() {
+        var data = this.data;
+        var analyserComponent = data.analyserEl.components.audioanalyser;
+        var el = this.el;
+
+        el.setObject3D('eyesDraw', new THREE.Object3D());
+        this.eyesDraw = this.el.getObject3D('eyesDraw');
+
+        //init rightClickEvent
+        window.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+        window.addEventListener('mousedown', function (e) {
+            if (e.which === 3) {
+                document.querySelector('a-entity[eyes-draw]').getAttribute('eyes-draw')['rightClickFlag'] = true;
+            }
+        });
+        window.addEventListener('mouseup', function (e) {
+            if (e.which === 3) {
+                document.querySelector('a-entity[eyes-draw]').getAttribute('eyes-draw')['rightClickFlag'] = false;
+            }
+        });
+        this.emitter = new _shaderParticleEngine2.default.Emitter({
+            maxAge: {
+                value: 18
+            },
+            position: {
+                value: new THREE.Vector3(0, 0, 0)
+            },
+
+            acceleration: {
+                value: new THREE.Vector3(0, 0, 0)
+                //spread: new THREE.Vector3(5, 0, 5)
+            },
+
+            velocity: {
+                //value: new THREE.Vector3(0, 10, 0)
+            },
+
+            color: {
+                value: [new THREE.Color(Math.random(), Math.random(), Math.random()), new THREE.Color(Math.random(), Math.random(), Math.random()), new THREE.Color(Math.random(), Math.random(), Math.random()), new THREE.Color(Math.random(), Math.random(), Math.random())]
+                //spread: new THREE.Vector3(1, 1, 1),
+            },
+            size: {
+                value: [2, 0]
+            },
+
+            particleCount: 3000,
+
+            activeMultiplier: 1
+        });
+    },
+    update: function update() {
+        var _this = this;
+
+        var data = this.data;
+        var el = this.el;
+        this.clock = new THREE.Clock();
+        this.particleGroup = new _shaderParticleEngine2.default.Group({
+            texture: {
+                value: THREE.ImageUtils.loadTexture(_smokeparticle2.default)
+            },
+            blending: THREE.AdditiveBlending
+        });
+        //this.particleGroup.addPool(1, this.emitter, false);
+        this.particleGroup.addEmitter(this.emitter);
+        this.eyesDraw.add(this.particleGroup.mesh);
+        data.analyserEl.addEventListener('audioanalyser-bigbeat', function () {
+            var analyserComponent = _this.data.analyserEl.components.audioanalyser;
+            updateColor(_this.emitter, [new THREE.Color(Math.random(), Math.random(), Math.random()), new THREE.Color(Math.random(), Math.random(), Math.random()), new THREE.Color(Math.random(), Math.random(), Math.random()), new THREE.Color(Math.random(), Math.random(), Math.random())]);
+        });
+    },
+
+    tick: function tick() {
+        var el = this.el;
+        var eyesDraw = this.eyesDraw;
+        var distance = this.data.distance;
+        var analyserComponent = this.data.analyserEl.components.audioanalyser;
+        if (!analyserComponent.eyesDraw || !analyserComponent.analyser) {
+            if (eyesDraw.visible) eyesDraw.visible = false;
+            return;
+        } else {
+            if (!eyesDraw.visible) eyesDraw.visible = true;
+            if (!this.data.rightClickFlag) {
+                this.emitter.activeMultiplier = 0;
+            } else {
+                this.emitter.activeMultiplier = 1;
+            }
+        }
+        var targetPos = this.data.camera.getAttribute('position');
+        var targetRot = this.data.camera.getAttribute('rotation');
+        var calPos = {
+            //以向右转为例
+            x: targetPos.x - distance * Math.sin(targetRot.y * (Math.PI / 180)), //targetRot.y为负，求得targetPos.x需为正
+            y: Math.max(0.5, distance * Math.tan(targetRot.x * (Math.PI / 180)) + targetPos.y),
+            z: targetPos.z - distance * Math.cos(targetRot.y * (Math.PI / 180))
+        };
+
+        this.emitter.position.value = this.emitter.position.value.set(calPos.x, calPos.y, calPos.z);
+
+        //Calculation
+        this.particleGroup.tick(this.clock.getDelta());
+    }
+});
+
+function updateColor(emitter, color) {
+    //clearTimeout(timer);
+    emitter.color.value = color;
+    //emitter.velocity.value = new THREE.Vector3(0, 5, 0);
+    // timer = setTimeout(() => { //Todo 0.8-1
+    //     emitter.velocity.value = new THREE.Vector3(0, 0, 0);
+    // }, 200);
+}
+},{"shader-particle-engine":31,"/assets/images/smokeparticle.png":27}],2:[function(require,module,exports) {
 'use strict';
 
 var _aframe = require('aframe');
@@ -80451,8 +80582,10 @@ require('./components/BeatParticle');
 
 require('./components/BigBeatParticle');
 
+require('./components/EyesDraw');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"aframe":21,"./scripts/WebAudioShim":9,"./components/AudioAnalyser":10,"./components/PlayButton":11,"./components/Menu":12,"./components/Item":13,"./components/EntityGenerator":14,"./components/Layout":15,"./components/3DSpectrum":16,"./components/Waveform":17,"./components/BallLight":18,"./components/BeatParticle":19,"./components/BigBeatParticle":20}],37:[function(require,module,exports) {
+},{"aframe":22,"./scripts/WebAudioShim":10,"./components/AudioAnalyser":9,"./components/PlayButton":11,"./components/Menu":12,"./components/Item":14,"./components/EntityGenerator":13,"./components/Layout":17,"./components/3DSpectrum":15,"./components/Waveform":16,"./components/BallLight":18,"./components/BeatParticle":19,"./components/BigBeatParticle":20,"./components/EyesDraw":21}],39:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -80481,7 +80614,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '55376' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '51254' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -80622,5 +80755,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[37,2], null)
+},{}]},{},[39,2], null)
 //# sourceMappingURL=/Parcel.2316ecc5.map

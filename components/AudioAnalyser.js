@@ -12,7 +12,8 @@ AFRAME.registerComponent('audioanalyser', {
 		smoothingTimeConstant: { default: 0.8 },
 		src: { type: 'selector' },
 		enableBeatDetection: { default: false },//实时检测算法默认关闭
-		enableBigBeat: { default: false }
+		enableBigBeat: { default: false },
+		enableEyesDraw: { default: false }
 	},
 
 	init: function () {
@@ -23,6 +24,7 @@ AFRAME.registerComponent('audioanalyser', {
 		this.waveEffectFlag = false;//相当于全局变量
 		this.levelsEffectFlag = false;
 		this.lightEffectFlag = false;
+		this.eyesDraw = false;
 		
 		this.prevTime = 0;
 		this.bpmTable = [];
@@ -101,7 +103,7 @@ AFRAME.registerComponent('audioanalyser', {
 			}
 		}
 
-		if (data.enableBigBeat) {
+		if (data.enableBigBeat || data.enableEyesDraw) {
 			let now = Math.floor(this.audio.currentTime / this.audio.duration * 10000);
 			if (this.bigBeatArr.includes(now)) {
 				if (this.oldNow === now) return;//防止触发两次（精度原因）
