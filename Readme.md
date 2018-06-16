@@ -12,7 +12,7 @@
 
 Detect the rhythm of the song's climax.
 
-Learn the Detect Method from [JMPerez](https://github.com/JMPerez/beats-audio-api](https://github.com/JMPerez/beats-audio-api)
+Learn the Detect Method from [JMPerez](https://github.com/JMPerez/beats-audio-api)
 
 2.RealTimeAnalysis
 
