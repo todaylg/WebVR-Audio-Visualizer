@@ -1,0 +1,1 @@
+*{margin:0;padding:0}#beginPanel{display:flex;flex-direction:column;align-items:center;width:100%;height:100%;position:absolute;top:0;left:0;background-color:#000;color:#fff;transition:opacity .4s}.button{padding:10px;box-sizing:border-box;border:2px solid #fff;letter-spacing:.01em;color:#fff;cursor:pointer;opacity:.8;margin-left:10px}.button:hover{opacity:1}input{display:none}
