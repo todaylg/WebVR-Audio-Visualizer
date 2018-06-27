@@ -5,6 +5,10 @@
   "author": "todaylg",
   "license": "MIT",
   "devDependencies": {
+    "gh-pages": "^1.2.0"
+  },
+  "scripts": {
+    "deploy": "parcel build index.html --public-url /WebVR-Audio-Visualizer/ && gh-pages -d dist"
   },
   "dependencies": {
     "aframe": "^0.7.1",

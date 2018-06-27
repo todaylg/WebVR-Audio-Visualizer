@@ -2,7 +2,7 @@
 
 > A WebVR Audio Visualizer,Basic on Aframe and Three.js.
 
-### [Demo](http://112.74.47.128:8888/)
+### [Demo](http://todaylg.com/WebVR-Audio-Visualizer/)
 
 ![image](https://github.com/todaylg/WebVR-Audio-Visualizer/blob/master/introImages/mainEffect.png)
 
@@ -12,7 +12,7 @@
 
 Detect the rhythm of the song's climax.
 
-Learn the Detect Method from [JMPerez](https://github.com/JMPerez/beats-audio-api](https://github.com/JMPerez/beats-audio-api)
+Learn the Detect Method from [JMPerez](https://github.com/JMPerez/beats-audio-api)
 
 2.RealTimeAnalysis
 
