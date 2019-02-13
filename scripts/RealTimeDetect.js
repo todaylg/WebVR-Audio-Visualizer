@@ -4,7 +4,7 @@ function isOnBeat() {
 	var instantCounter = 0;
 	var isBeat = false;
 	// fill history buffer 
-	for (var i = 0; i < this.levels.length - 1; i++ , ++instantCounter) {
+	for (var i = 0; i < this.levels.length; i++ , ++instantCounter) {
 		this.historyBuffer.push(this.levels[i]);  //add sample to historyBuffer
 	}
 	//sensitivity of detection
