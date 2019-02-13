@@ -64,7 +64,7 @@ function initEnvEffect(context) {
                 }
             }, function () {
                 //decode fail
-                console('source not support');
+                console.log('source not support');
             });
         };
         request.send();
