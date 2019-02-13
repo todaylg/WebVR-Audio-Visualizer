@@ -44,7 +44,7 @@ function initEnvEffect(context) {
     let sourceGainNode = context.createGain();
     let convolutionNodes = [];
     let gainNodes = [];
-    let audioPreURL = '/assets/audio/impulse/';
+    let audioPreURL = 'assets/audio/impulse/';
     for (let i = 0; i < convolutionInfo.length; i++) {
         convolutionNodes[i] = context.createConvolver();
         loadRes(context, audioPreURL + convolutionInfo[i].url, convolutionNodes[i]);
